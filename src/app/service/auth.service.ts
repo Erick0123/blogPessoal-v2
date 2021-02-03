@@ -19,6 +19,10 @@ export class AuthService {
     headers: new HttpHeaders().set('Authorization', environment.token)
   }
 
+  getByIdUser(id: number): Observable<User>{
+    return this.http.get<User>(`http://localhost:8080/usuarios/${id}`, this.token)
+  }
+
   entrar(userLogin: UserLogin): Observable<UserLogin>{
     return this.http.post<UserLogin>('http://localhost:8080/usuarios/logar', userLogin)
   }
