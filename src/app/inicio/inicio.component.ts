@@ -18,10 +18,12 @@ export class InicioComponent implements OnInit {
 
   postagem: Postagem = new Postagem()
   listaPostagens: Postagem[]
+  tituloPost: string
 
   tema: Tema = new Tema()
   listaTemas: Tema[]
   idTema: number
+  nomeTema: string
 
   user: User = new User()
   idUser = environment.id
@@ -40,15 +42,15 @@ export class InicioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    window.scroll(0,0)
-    
+    window.scroll(0, 0)
+
     if (environment.token == '') {
       this.router.navigate(['/entrar'])
     }
 
     this.getAllTemas()
     this.getAllPostagens()
-    
+
   }
 
   getAllTemas() {
@@ -63,14 +65,14 @@ export class InicioComponent implements OnInit {
     })
   }
 
-  getAllPostagens(){
-    this.postagemService.getAllPostagem().subscribe((resp : Postagem[]) => {
+  getAllPostagens() {
+    this.postagemService.getAllPostagem().subscribe((resp: Postagem[]) => {
       this.listaPostagens = resp
     })
   }
 
-  findByIdUser(){
-    this.authService.getByIdUser(this.idUser).subscribe((resp : User) => {
+  findByIdUser() {
+    this.authService.getByIdUser(this.idUser).subscribe((resp: User) => {
       this.user = resp
     })
   }
@@ -88,7 +90,27 @@ export class InicioComponent implements OnInit {
       this.postagem = new Postagem()
       this.getAllPostagens()
     })
+  }
 
+  findByTituloPostagem() {
+
+    if (this.tituloPost == '') {
+      this.getAllPostagens()
+    } else {
+      this.postagemService.getByTituloPostagem(this.tituloPost).subscribe((resp: Postagem[]) => {
+        this.listaPostagens = resp
+      })
+    }
+  }
+
+  findByNomeTema(){
+    if(this.nomeTema == ''){
+      this.getAllTemas()
+    } else{
+      this.temaService.getByNomeTema(this.nomeTema).subscribe((resp: Tema[]) => {
+        this.listaTemas = resp
+      })
+    }
 
   }
 
