@@ -26,6 +26,10 @@ export class TemaComponent implements OnInit {
       this.alertas.showAlertInfo('Sua seção expirou, faça o login novamente.')
       this.router.navigate(['/entrar'])
     }
+    if(environment.tipo != "adm"){
+      this.alertas.showAlertInfo('Acesso somente por Administradores')
+      this.router.navigate(['/inicio'])
+    }
 
    this.findAllTemas()
 
